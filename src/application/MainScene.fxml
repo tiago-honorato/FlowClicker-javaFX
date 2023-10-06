@@ -19,5 +19,10 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <Button layoutX="660.0" layoutY="105.0" mnemonicParsing="false" onAction="#botaoUpgrade" text="Upgrade Flow">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

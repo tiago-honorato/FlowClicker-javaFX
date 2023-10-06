@@ -8,6 +8,8 @@ public class MainSceneController {
 	
 	public int score = 0;
 	
+	public double upgradePoint = 0.1;
+	
 	public double value = 0;
 	
 	@FXML
@@ -20,7 +22,7 @@ public class MainSceneController {
 		
 		System.out.println("botaoFlow");
 		
-		value = value + 0.1;
+		value = value + upgradePoint;
 		
 		if (value > 1) {
 			
@@ -34,7 +36,12 @@ public class MainSceneController {
 		scoreLabel.setText(Integer.toString(score));
 		
 		System.out.println("value: " + value);
+			
+	}
+	
+	public void botaoUpgrade() {
 		
+		upgradePoint = upgradePoint + 0.1;
 		
 	}
 	
