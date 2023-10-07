@@ -19,10 +19,12 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="660.0" layoutY="105.0" mnemonicParsing="false" onAction="#botaoUpgrade" text="Upgrade Flow">
+      <Button fx:id="btnUpgrade" layoutX="660.0" layoutY="105.0" mnemonicParsing="false" onAction="#botaoUpgrade" text="Upgrade Flow">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
+      <Label fx:id="costUpgradeLabel" layoutX="695.0" layoutY="89.0" text="Cost: 3" />
+      <Label fx:id="reqLabel" layoutX="704.0" layoutY="134.0" textFill="RED" />
    </children>
 </AnchorPane>
