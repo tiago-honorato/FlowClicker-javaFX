@@ -13,8 +13,8 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <ProgressBar fx:id="progresso" layoutX="209.0" layoutY="220.0" prefHeight="30.0" prefWidth="400.0" progress="0.0" />
-      <Label fx:id="scoreLabel" layoutX="392.0" layoutY="320.0" text="0">
+      <ProgressBar fx:id="progresso" layoutX="199.0" layoutY="220.0" prefHeight="30.0" prefWidth="400.0" progress="0.0" />
+      <Label fx:id="scoreLabel" layoutX="401.0" layoutY="320.0" text="0">
          <font>
             <Font size="25.0" />
          </font>

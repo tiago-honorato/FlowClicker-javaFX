@@ -12,7 +12,7 @@ public class MainSceneController implements Initializable{
 	
 	public boolean maxUpgradeFlow = false;
 	
-	public int score = 99999;
+	public int score = 0;
 	
 	public int required = 3;
 	
@@ -65,7 +65,14 @@ public class MainSceneController implements Initializable{
 		scoreLabel.setText(Integer.toString(score));
 		
 		System.out.println("value: " + value);
+		
+		if (score > 9) {
 			
+			scoreLabel.setLayoutX(390);
+			
+			scoreLabel.setLayoutX(score > 9999 ? 360 : (score > 999 ? 370 : (score > 99 ? 380 : 390)));
+		}
+		
 	}
 	
 	public void botaoUpgrade() {
