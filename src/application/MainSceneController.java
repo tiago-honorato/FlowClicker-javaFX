@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.Color;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -91,7 +92,9 @@ public class MainSceneController implements Initializable{
 			
 		}else {
 			
-			reqLabel.setText("");
+			reqLabel.setTextFill(javafx.scene.paint.Color.GREEN);
+			reqLabel.setLayoutX(685);
+			reqLabel.setText("upgraded!");
 			
 			if (score >= required) {
 				
@@ -115,6 +118,7 @@ public class MainSceneController implements Initializable{
 			} else {
 				
 				reqLabel.setLayoutX(670);
+				reqLabel.setTextFill(javafx.scene.paint.Color.RED);
 				reqLabel.setText("need at least: " + Integer.toString(required));
 				
 			}
