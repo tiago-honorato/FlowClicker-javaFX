@@ -10,7 +10,9 @@ import javafx.scene.control.*;
 
 public class MainSceneController implements Initializable{
 	
-	public int score = 0;
+	public boolean maxUpgradeFlow = false;
+	
+	public int score = 99999;
 	
 	public int required = 3;
 	
@@ -53,7 +55,12 @@ public class MainSceneController implements Initializable{
 			
 		}
 		
-		progresso.setProgress(value);
+		if (!maxUpgradeFlow) {
+			
+			progresso.setProgress(value);
+			
+		}
+		
 		
 		scoreLabel.setText(Integer.toString(score));
 		
@@ -65,9 +72,13 @@ public class MainSceneController implements Initializable{
 		
 		if (upgradePoint >= 1) {
 			
+			maxUpgradeFlow = true;
+			
 			costUpgradeLabel.setText("MAX");
 			costUpgradeLabel.setLayoutX(705);
 			btnUpgrade.setDisable(true);
+			
+			progresso.setProgress(-1);
 			
 			System.out.println("nope");
 			
@@ -79,7 +90,16 @@ public class MainSceneController implements Initializable{
 				
 				score = score - required;
 				
-				required = (int) (required*1.5);
+				if (required >= 500) {
+					
+					required = (int) (required*1.1);
+					
+				}else {
+					
+					required = (int) (required*1.4);
+					
+				}
+				
 				
 				upgradePoint = upgradePoint + 0.02;
 				
