@@ -12,11 +12,11 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/MainScene.fxml"));
 			
 			Scene scene = new Scene(root);
 			
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/view/application.css").toExternalForm());
 			
 			primaryStage.setResizable(false);
 			

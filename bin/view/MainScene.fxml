@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainSceneController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.MainSceneController">
    <children>
       <Button layoutX="369.0" layoutY="134.0" mnemonicParsing="false" onAction="#botaoFlow" text="Flow!">
          <font>
@@ -19,7 +19,7 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Button fx:id="btnUpgradeFlow" layoutX="660.0" layoutY="105.0" mnemonicParsing="false" onAction="#actBtnUpgradeValue" text="Upgrade Flow">
+      <Button fx:id="btnUpgradeFlow" layoutX="660.0" layoutY="105.0" mnemonicParsing="false" onAction="#actBtnUpgradeFlow" text="Upgrade Flow">
          <font>
             <Font size="15.0" />
          </font>

@@ -1,8 +1,7 @@
-package application;
+package control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -12,7 +11,7 @@ public class MainSceneController implements Initializable{
 	
 	public boolean maxUpgradeFlow, maxUpgradeScore = false;
 	
-	public int score = 50;
+	public int score = 90000;
 	
 	public int scorePerClick = 1;
 	
@@ -90,12 +89,14 @@ public class MainSceneController implements Initializable{
 		
 	}
 	
-	public void actBtnUpgradeValue () {
+	public void actBtnUpgradeFlow () {
 		
 		//verifica se o upgrade tá no máximo
 		if (progressBarPoint >= 1) {
 			
 			maxUpgradeFlow = true;
+			
+			reqLabelFlowUpgrade.setText("");
 			
 			costUpgradeFlowLabel.setText("MAX");
 			costUpgradeFlowLabel.setLayoutX(705);
@@ -151,6 +152,8 @@ public class MainSceneController implements Initializable{
 		if (scorePerClick >= 10) {
 			
 			maxUpgradeScore = true;
+			
+			reqLabelScoreUpgrade.setText("");
 			
 			costUpgradeScoreLabel.setText("MAX");
 			costUpgradeScoreLabel.setLayoutX(705);
