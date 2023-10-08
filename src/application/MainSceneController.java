@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Color;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,30 +10,43 @@ import javafx.scene.control.*;
 
 public class MainSceneController implements Initializable{
 	
-	public boolean maxUpgradeFlow = false;
+	public boolean maxUpgradeFlow, maxUpgradeScore = false;
 	
-	public int score = 0;
+	public int score = 50;
 	
-	public int required = 3;
+	public int scorePerClick = 1;
 	
-	public double upgradePoint = 0.1;
+	public int requiredToUpgradeFlow = 3;
 	
-	public double value = 0;
+	public int requiredToUpgradeScore = 10;
+	
+	public double progressBarPoint = 0.1;
+	
+	public double valueProgressBar = 0;
 	
 	@FXML
 	public Label scoreLabel;
 	
 	@FXML
-	public Label costUpgradeLabel;
+	public Label costUpgradeFlowLabel;
 	
 	@FXML
-	public Label reqLabel;
+	public Label reqLabelFlowUpgrade;
+	
+	@FXML
+	public Label reqLabelScoreUpgrade;
 	
 	@FXML
 	public ProgressBar progresso;
 	
 	@FXML
-	public Button btnUpgrade;
+	public Button btnUpgradeFlow;
+	
+	@FXML
+	public Button btnUpgradeScore;
+	
+	@FXML
+	public Label costUpgradeScoreLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -47,25 +59,27 @@ public class MainSceneController implements Initializable{
 		
 		System.out.println("botaoFlow");
 		
-		value = value + upgradePoint;
+		valueProgressBar = valueProgressBar + progressBarPoint;
 		
-		if (value > 1) {
+		if (valueProgressBar > 1) {
 			
-			value = 0;
-			score++;
+			valueProgressBar = 0;
+			score = score + scorePerClick ;
 			
 		}
 		
 		if (!maxUpgradeFlow) {
 			
-			progresso.setProgress(value);
+			progresso.setProgress(valueProgressBar);
 			
 		}
 		
 		
 		scoreLabel.setText(Integer.toString(score));
 		
-		System.out.println("value: " + value);
+		System.out.println("value: " + String.format("%.2f", valueProgressBar)+
+				"\n"+
+				" progressBar: " + String.format("%.2f", progressBarPoint));
 		
 		if (score > 9) {
 			
@@ -76,50 +90,107 @@ public class MainSceneController implements Initializable{
 		
 	}
 	
-	public void botaoUpgrade() {
+	public void actBtnUpgradeValue () {
 		
-		if (upgradePoint >= 1) {
+		//verifica se o upgrade tá no máximo
+		if (progressBarPoint >= 1) {
 			
 			maxUpgradeFlow = true;
 			
-			costUpgradeLabel.setText("MAX");
-			costUpgradeLabel.setLayoutX(705);
-			btnUpgrade.setDisable(true);
+			costUpgradeFlowLabel.setText("MAX");
+			costUpgradeFlowLabel.setLayoutX(705);
+			btnUpgradeFlow.setDisable(true);
 			
 			progresso.setProgress(-1);
 			
-			System.out.println("nope");
+			System.out.println("Upgrade Flow MAX");
 			
 		}else {
 			
-			reqLabel.setTextFill(javafx.scene.paint.Color.GREEN);
-			reqLabel.setLayoutX(685);
-			reqLabel.setText("upgraded!");
+			reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
+			reqLabelFlowUpgrade.setLayoutX(685);
+			reqLabelFlowUpgrade.setText("upgraded!");
 			
-			if (score >= required) {
+			//verifica se tem pontos suficientes
+			if (score >= requiredToUpgradeFlow) {
 				
-				score = score - required;
+				//desconta os pontos a serem pagos
+				score = score - requiredToUpgradeFlow;
 				
-				if (required >= 500) {
+				if (requiredToUpgradeFlow >= 500) {
 					
-					required = (int) (required*1.1);
+					requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.1);
 					
 				}else {
 					
-					required = (int) (required*1.4);
+					requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.4);
 					
 				}
 				
+				//upgrade
+				progressBarPoint = progressBarPoint + 0.02;
 				
-				upgradePoint = upgradePoint + 0.02;
-				
-				costUpgradeLabel.setText("Cost: " + Integer.toString(required));
+				//atualiza o label
+				costUpgradeFlowLabel.setText("Cost: " + Integer.toString(requiredToUpgradeFlow));
 				
 			} else {
 				
-				reqLabel.setLayoutX(670);
-				reqLabel.setTextFill(javafx.scene.paint.Color.RED);
-				reqLabel.setText("need at least: " + Integer.toString(required));
+				reqLabelFlowUpgrade.setLayoutX(670);
+				reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.RED);
+				reqLabelFlowUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeFlow));
+				
+			}
+			
+		}
+		
+	}
+	
+	public void actBtnUpgradeScore() {
+		
+		//verifica se o upgrade tá no máximo
+		if (scorePerClick >= 10) {
+			
+			maxUpgradeScore = true;
+			
+			costUpgradeScoreLabel.setText("MAX");
+			costUpgradeScoreLabel.setLayoutX(705);
+			
+			btnUpgradeScore.setDisable(true);
+			
+			System.out.println("Upgrade Score MAX");
+			
+		} else {
+			
+			reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
+			reqLabelScoreUpgrade.setLayoutX(685);
+			reqLabelScoreUpgrade.setText("upgraded!");
+			
+			//verifica se tem pontos suficientes
+			if (score >= requiredToUpgradeScore) {
+				
+				//desconta os pontos a serem pagos
+				score = score - requiredToUpgradeScore;
+				
+				if (requiredToUpgradeScore >= 500) {
+					
+					requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.1);
+					
+				}else {
+					
+					requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.4);
+					
+				}
+				//upgrade
+				scorePerClick++;
+				
+				//atualiza o label
+				costUpgradeScoreLabel.setText("Cost: " + Integer.toString(requiredToUpgradeScore));
+				
+			} else {
+				
+				reqLabelScoreUpgrade.setLayoutX(670);
+				reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.RED);
+				reqLabelScoreUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeScore));
 				
 			}
 			

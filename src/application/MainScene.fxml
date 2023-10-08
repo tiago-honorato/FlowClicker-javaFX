@@ -14,17 +14,24 @@
          </font>
       </Button>
       <ProgressBar fx:id="progresso" layoutX="199.0" layoutY="220.0" prefHeight="30.0" prefWidth="400.0" progress="0.0" />
-      <Label fx:id="scoreLabel" layoutX="401.0" layoutY="320.0" text="0">
+      <Label fx:id="scoreLabel" layoutX="400.0" layoutY="320.0" text="0">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Button fx:id="btnUpgrade" layoutX="660.0" layoutY="105.0" mnemonicParsing="false" onAction="#botaoUpgrade" text="Upgrade Flow">
+      <Button fx:id="btnUpgradeFlow" layoutX="660.0" layoutY="105.0" mnemonicParsing="false" onAction="#actBtnUpgradeValue" text="Upgrade Flow">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Label fx:id="costUpgradeLabel" layoutX="695.0" layoutY="89.0" text="Cost: 3" />
-      <Label fx:id="reqLabel" layoutX="704.0" layoutY="134.0" textFill="RED" />
+      <Label fx:id="costUpgradeFlowLabel" layoutX="695.0" layoutY="90.0" text="Cost: 3" />
+      <Label fx:id="reqLabelFlowUpgrade" layoutX="704.0" layoutY="135.0" textFill="RED" />
+      <Button fx:id="btnUpgradeScore" layoutX="660.0" layoutY="175.0" mnemonicParsing="false" onAction="#actBtnUpgradeScore" prefHeight="29.0" prefWidth="124.0" text="Upgrade Score">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="costUpgradeScoreLabel" layoutX="695.0" layoutY="160.0" text="Cost: 10" />
+      <Label fx:id="reqLabelScoreUpgrade" layoutX="704.0" layoutY="205.0" textFill="RED" />
    </children>
 </AnchorPane>
