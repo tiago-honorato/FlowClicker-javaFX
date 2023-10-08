@@ -30,13 +30,19 @@ public class MainSceneController implements Initializable{
 	public Label costUpgradeFlowLabel;
 	
 	@FXML
+	public Label costUpgradeScoreLabel;
+	
+	@FXML
+	public Label costAddClickerLabel;
+	
+	@FXML
 	public Label reqLabelFlowUpgrade;
 	
 	@FXML
 	public Label reqLabelScoreUpgrade;
 	
 	@FXML
-	public ProgressBar progresso;
+	public ProgressBar progressBar;
 	
 	@FXML
 	public Button btnUpgradeFlow;
@@ -45,7 +51,7 @@ public class MainSceneController implements Initializable{
 	public Button btnUpgradeScore;
 	
 	@FXML
-	public Label costUpgradeScoreLabel;
+	public Button btnAddClicker;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -55,8 +61,6 @@ public class MainSceneController implements Initializable{
 	}
 	
 	public void botaoFlow() {
-		
-		System.out.println("botaoFlow");
 		
 		valueProgressBar = valueProgressBar + progressBarPoint;
 		
@@ -69,7 +73,7 @@ public class MainSceneController implements Initializable{
 		
 		if (!maxUpgradeFlow) {
 			
-			progresso.setProgress(valueProgressBar);
+			progressBar.setProgress(valueProgressBar);
 			
 		}
 		
@@ -102,10 +106,8 @@ public class MainSceneController implements Initializable{
 			costUpgradeFlowLabel.setLayoutX(705);
 			btnUpgradeFlow.setDisable(true);
 			
-			progresso.setProgress(-1);
-			
-			System.out.println("Upgrade Flow MAX");
-			
+			progressBar.setProgress(-1);
+						
 		}else {
 			
 			reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
@@ -118,7 +120,7 @@ public class MainSceneController implements Initializable{
 				//desconta os pontos a serem pagos
 				score = score - requiredToUpgradeFlow;
 				
-				if (requiredToUpgradeFlow >= 500) {
+				if (requiredToUpgradeFlow >= 500) {		
 					
 					requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.1);
 					
@@ -160,14 +162,12 @@ public class MainSceneController implements Initializable{
 			
 			btnUpgradeScore.setDisable(true);
 			
-			System.out.println("Upgrade Score MAX");
-			
 		} else {
 			
 			reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
 			reqLabelScoreUpgrade.setLayoutX(685);
 			reqLabelScoreUpgrade.setText("upgraded!");
-			
+				
 			//verifica se tem pontos suficientes
 			if (score >= requiredToUpgradeScore) {
 				
@@ -198,6 +198,12 @@ public class MainSceneController implements Initializable{
 			}
 			
 		}
+		
+	}
+	
+	public void actBtnAddClicker() {
+		
+		System.out.println("ADD CLICKER");
 		
 	}
 	

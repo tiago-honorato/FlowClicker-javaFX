@@ -13,7 +13,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <ProgressBar fx:id="progresso" layoutX="199.0" layoutY="220.0" prefHeight="30.0" prefWidth="400.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" layoutX="199.0" layoutY="220.0" prefHeight="30.0" prefWidth="400.0" progress="0.0" />
       <Label fx:id="scoreLabel" layoutX="400.0" layoutY="320.0" text="0">
          <font>
             <Font size="25.0" />
@@ -33,5 +33,11 @@
       </Button>
       <Label fx:id="costUpgradeScoreLabel" layoutX="695.0" layoutY="160.0" text="Cost: 10" />
       <Label fx:id="reqLabelScoreUpgrade" layoutX="704.0" layoutY="205.0" textFill="RED" />
+      <Button fx:id="btnAddClicker" layoutX="660.0" layoutY="245.0" mnemonicParsing="false" onAction="#actBtnAddClicker" prefHeight="29.0" prefWidth="124.0" text="add clicker">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="costAddClickerLabel" layoutX="695.0" layoutY="230.0" text="Cost: 10" />
    </children>
 </AnchorPane>
