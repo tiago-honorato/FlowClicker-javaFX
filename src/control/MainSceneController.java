@@ -5,13 +5,14 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import model.MainModel;
 
 
 public class MainSceneController implements Initializable{
 	
 	public boolean maxUpgradeFlow, maxUpgradeScore = false;
 	
-	public int score = 90000;
+	public static int score = 10;
 	
 	public int scorePerClick = 1;
 	
@@ -204,6 +205,10 @@ public class MainSceneController implements Initializable{
 	public void actBtnAddClicker() {
 		
 		System.out.println("ADD CLICKER");
+		
+		MainModel m = new MainModel();
+		
+		m.actBtnAddClicker();
 		
 	}
 	
