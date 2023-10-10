@@ -2,17 +2,20 @@ package control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.MainModel;
-
 
 public class MainSceneController implements Initializable{
 	
-	public boolean maxUpgradeFlow, maxUpgradeScore = false;
+	public boolean maxUpgradeFlow, maxUpgradeScore, maxUpgradeClicker = false;
 	
-	public static int score = 10;
+	public int score = 999999;
+	
+	public int clickerPoint = 0;
 	
 	public int scorePerClick = 1;
 	
@@ -20,12 +23,17 @@ public class MainSceneController implements Initializable{
 	
 	public int requiredToUpgradeScore = 10;
 	
+	public int requiredToUpgradeClicker = 20;
+	
 	public double progressBarPoint = 0.1;
 	
 	public double valueProgressBar = 0;
 	
 	@FXML
 	public Label scoreLabel;
+	
+	@FXML
+	public Label ClickersCountLabel;
 	
 	@FXML
 	public Label costUpgradeFlowLabel;
@@ -43,6 +51,9 @@ public class MainSceneController implements Initializable{
 	public Label reqLabelScoreUpgrade;
 	
 	@FXML
+	public Label reqLabelClickerUpgrade;
+	
+	@FXML
 	public ProgressBar progressBar;
 	
 	@FXML
@@ -57,7 +68,7 @@ public class MainSceneController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		//
+		timer();
 		
 	}
 	
@@ -80,10 +91,6 @@ public class MainSceneController implements Initializable{
 		
 		
 		scoreLabel.setText(Integer.toString(score));
-		
-		System.out.println("value: " + String.format("%.2f", valueProgressBar)+
-				"\n"+
-				" progressBar: " + String.format("%.2f", progressBarPoint));
 		
 		if (score > 9) {
 			
@@ -202,13 +209,82 @@ public class MainSceneController implements Initializable{
 		
 	}
 	
+	public void timer() {
+		
+		Timer myTimer = new Timer();
+		
+		myTimer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				
+				Platform .runLater(() -> {
+					
+					scoreLabel.setText(Integer.toString(score));
+					
+					score = score + clickerPoint;
+					
+					timer();
+					
+				});
+				
+			}
+		}, 1000);
+		
+	}
+	
 	public void actBtnAddClicker() {
 		
-		System.out.println("ADD CLICKER");
-		
-		MainModel m = new MainModel();
-		
-		m.actBtnAddClicker();
+		//verifica se o upgrade tá no máximo
+		if (clickerPoint >= 50) {
+			
+			maxUpgradeClicker = true;
+			
+			reqLabelClickerUpgrade.setText("");
+			
+			costAddClickerLabel.setText("MAX");
+			costAddClickerLabel.setLayoutX(705);
+			
+			btnAddClicker.setDisable(true);
+			
+		} else {
+			
+			reqLabelClickerUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
+			reqLabelClickerUpgrade.setLayoutX(685);
+			reqLabelClickerUpgrade.setText("upgraded!");
+				
+			//verifica se tem pontos suficientes
+			if (score >= requiredToUpgradeClicker) {
+				
+				//desconta os pontos a serem pagos
+				score = score - requiredToUpgradeClicker;
+				
+				if (requiredToUpgradeClicker >= 50) {
+					
+					requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.1);
+					
+				}else {
+					
+					requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.4);
+					
+				}
+				//upgrade
+				clickerPoint++;
+				
+				
+				//atualiza os labels
+				costAddClickerLabel.setText("Cost: " + Integer.toString(requiredToUpgradeClicker));
+				ClickersCountLabel.setText("Clickers: " + Integer.toString(clickerPoint));
+				
+			} else {
+				
+				reqLabelClickerUpgrade.setLayoutX(670);
+				reqLabelClickerUpgrade.setTextFill(javafx.scene.paint.Color.RED);
+				reqLabelClickerUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeClicker));
+				
+			}
+			
+		}
 		
 	}
 	
