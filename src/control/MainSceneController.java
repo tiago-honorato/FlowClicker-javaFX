@@ -5,15 +5,17 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.WindowEvent;
 
 public class MainSceneController implements Initializable{
 	
-	public boolean maxUpgradeFlow, maxUpgradeScore, maxUpgradeClicker = false;
+	public boolean maxUpgradeFlow = false;
 	
-	public int score = 999999;
+	public int score = 0;
 	
 	public int clickerPoint = 0;
 	
@@ -69,6 +71,21 @@ public class MainSceneController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		timer();
+		
+		//encerra o aplicativo quando fecha a janela
+		Platform.runLater(() -> {
+			
+			btnUpgradeFlow.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+				
+				@Override
+				public void handle(WindowEvent event) {
+					
+					System.exit(0);
+					
+				}
+			});
+			
+		});
 		
 	}
 	
@@ -161,8 +178,6 @@ public class MainSceneController implements Initializable{
 		//verifica se o upgrade tá no máximo
 		if (scorePerClick >= 10) {
 			
-			maxUpgradeScore = true;
-			
 			reqLabelScoreUpgrade.setText("");
 			
 			costUpgradeScoreLabel.setText("MAX");
@@ -237,8 +252,6 @@ public class MainSceneController implements Initializable{
 		
 		//verifica se o upgrade tá no máximo
 		if (clickerPoint >= 50) {
-			
-			maxUpgradeClicker = true;
 			
 			reqLabelClickerUpgrade.setText("");
 			
