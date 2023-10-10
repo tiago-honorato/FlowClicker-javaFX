@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.WindowEvent;
 
 public class MainSceneController implements Initializable{
@@ -16,54 +17,45 @@ public class MainSceneController implements Initializable{
 	public boolean maxUpgradeFlow = false;
 	
 	public int score = 0;
-	
 	public int clickerPoint = 0;
-	
 	public int scorePerClick = 1;
-	
 	public int requiredToUpgradeFlow = 3;
-	
 	public int requiredToUpgradeScore = 10;
-	
 	public int requiredToUpgradeClicker = 20;
 	
 	public double progressBarPoint = 0.1;
-	
 	public double valueProgressBar = 0;
 	
 	@FXML
+	public Label dissapearLabel;
+	@FXML
 	public Label scoreLabel;
-	
 	@FXML
 	public Label ClickersCountLabel;
-	
 	@FXML
 	public Label costUpgradeFlowLabel;
-	
 	@FXML
 	public Label costUpgradeScoreLabel;
-	
 	@FXML
 	public Label costAddClickerLabel;
-	
 	@FXML
 	public Label reqLabelFlowUpgrade;
-	
 	@FXML
 	public Label reqLabelScoreUpgrade;
-	
 	@FXML
 	public Label reqLabelClickerUpgrade;
+	@FXML
+	public Label statsLabel;
 	
 	@FXML
 	public ProgressBar progressBar;
 	
 	@FXML
+	public Button btnFlow;
+	@FXML
 	public Button btnUpgradeFlow;
-	
 	@FXML
 	public Button btnUpgradeScore;
-	
 	@FXML
 	public Button btnAddClicker;
 
@@ -89,9 +81,20 @@ public class MainSceneController implements Initializable{
 		
 	}
 	
-	public void botaoFlow() {
+	int a = 0;
+	public void actbotaoFlow() {
 		
 		valueProgressBar = valueProgressBar + progressBarPoint;
+		
+		dissapearLabel.setText("");
+		
+		String[] cores = {"BLUE", "RED", "GREEN", "PURPLE", "BLACK"};
+		
+		btnFlow.setTextFill(Color.web(cores[a]));
+		scoreLabel.setTextFill(Color.web(cores[a]));
+		ClickersCountLabel.setTextFill(Color.web(cores[a]));
+		a++;
+		if (a == 4) a = 0;
 		
 		if (valueProgressBar > 1) {
 			
@@ -236,6 +239,8 @@ public class MainSceneController implements Initializable{
 				Platform .runLater(() -> {
 					
 					scoreLabel.setText(Integer.toString(score));
+					
+					statsLabel.setText("stats: ");
 					
 					score = score + clickerPoint;
 					
