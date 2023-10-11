@@ -16,9 +16,10 @@ public class MainSceneController implements Initializable{
 	
 	public boolean maxUpgradeFlow = false;
 	
-	public int score = 0;
+	public int score = 999;
 	public int clickerPoint = 0;
 	public int scorePerClick = 1;
+	public int requiredToUnlockUpgrade = 10;
 	public int requiredToUpgradeFlow = 3;
 	public int requiredToUpgradeScore = 10;
 	public int requiredToUpgradeClicker = 20;
@@ -33,11 +34,15 @@ public class MainSceneController implements Initializable{
 	@FXML
 	public Label ClickersCountLabel;
 	@FXML
+	public Label costUnlockUpgradesLabel;
+	@FXML
 	public Label costUpgradeFlowLabel;
 	@FXML
 	public Label costUpgradeScoreLabel;
 	@FXML
 	public Label costAddClickerLabel;
+	
+	public Label costAddFactoryLabel;
 	@FXML
 	public Label reqLabelFlowUpgrade;
 	@FXML
@@ -53,11 +58,15 @@ public class MainSceneController implements Initializable{
 	@FXML
 	public Button btnFlow;
 	@FXML
+	public Button btnUnlockUpgrade;
+	@FXML
 	public Button btnUpgradeFlow;
 	@FXML
 	public Button btnUpgradeScore;
 	@FXML
 	public Button btnAddClicker;
+	@FXML
+	public Button btnAddFactory;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -117,6 +126,41 @@ public class MainSceneController implements Initializable{
 			scoreLabel.setLayoutX(390);
 			
 			scoreLabel.setLayoutX(score > 9999 ? 360 : (score > 999 ? 370 : (score > 99 ? 380 : 390)));
+		}
+		
+	}
+	
+	int unlockLevel = 0;
+	public void actBtnUnlockUpgrade() {
+		
+		if (score >= requiredToUnlockUpgrade) {
+			
+			score = score - requiredToUnlockUpgrade;
+			
+			requiredToUnlockUpgrade = requiredToUnlockUpgrade*3;
+			
+			costUnlockUpgradesLabel.setText("Cost: " + Integer.toString(requiredToUnlockUpgrade));
+			
+			switch (unlockLevel) {
+			case 0:
+				btnUpgradeFlow.setDisable(false);
+				break;
+			case 1:
+				btnUpgradeScore.setDisable(false);
+				break;
+			case 2:
+				btnAddClicker.setDisable(false);
+				break;
+			case 3:
+				btnAddFactory.setDisable(false);
+				break;
+			}
+			
+			unlockLevel++;
+			
+			//verifica se já desbloqueou tudo
+			if (unlockLevel >= 4) btnUnlockUpgrade.setDisable(true);
+
 		}
 		
 	}
@@ -244,7 +288,7 @@ public class MainSceneController implements Initializable{
 					
 					score = score + clickerPoint;
 					
-					timer();
+					run();
 					
 				});
 				
@@ -303,6 +347,12 @@ public class MainSceneController implements Initializable{
 			}
 			
 		}
+		
+	}
+	
+	public void actBtnAddFactory() {
+		
+		System.out.println("actBtnAddFactory()");
 		
 	}
 	
