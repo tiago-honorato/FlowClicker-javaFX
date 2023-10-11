@@ -16,7 +16,7 @@ public class MainSceneController implements Initializable{
 	
 	public boolean maxUpgradeFlow = false;
 	
-	public int score = 999;
+	public int score = 1110;
 	public int clickerPoint = 0;
 	public int scorePerClick = 1;
 	public int requiredToUnlockUpgrade = 10;
@@ -32,6 +32,8 @@ public class MainSceneController implements Initializable{
 	@FXML
 	public Label scoreLabel;
 	@FXML
+	public Label reqLabelUnlockUpgrade;
+	@FXML
 	public Label ClickersCountLabel;
 	@FXML
 	public Label costUnlockUpgradesLabel;
@@ -41,7 +43,7 @@ public class MainSceneController implements Initializable{
 	public Label costUpgradeScoreLabel;
 	@FXML
 	public Label costAddClickerLabel;
-	
+	@FXML
 	public Label costAddFactoryLabel;
 	@FXML
 	public Label reqLabelFlowUpgrade;
@@ -275,6 +277,7 @@ public class MainSceneController implements Initializable{
 		
 	}
 	
+	//myTimer.cancel();
 	public void timer() {
 		
 		Timer myTimer = new Timer();
@@ -292,14 +295,11 @@ public class MainSceneController implements Initializable{
 					
 					score = score + clickerPoint;
 					
-					timer();
-					
-					//run();
-					
 				});
 				
 			}
-		}, 1000);
+			
+		}, 0, 1000);
 		
 	}
 	

@@ -64,5 +64,6 @@
          </font>
       </Button>
       <Label fx:id="costAddFactoryLabel" layoutX="695.0" layoutY="303.0" text="Cost: 20" />
+      <Label fx:id="reqLabelUnlockUpgrade" layoutX="39.0" layoutY="167.0" text="Label" />
    </children>
 </AnchorPane>
