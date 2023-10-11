@@ -125,7 +125,7 @@ public class MainSceneController implements Initializable{
 			
 			scoreLabel.setLayoutX(390);
 			
-			scoreLabel.setLayoutX(score > 9999 ? 360 : (score > 999 ? 370 : (score > 99 ? 380 : 390)));
+			scoreLabel.setLayoutX(score > 9999 ? 365 : (score > 999 ? 375 : (score > 99 ? 385 : 390)));
 		}
 		
 	}
@@ -159,7 +159,11 @@ public class MainSceneController implements Initializable{
 			unlockLevel++;
 			
 			//verifica se já desbloqueou tudo
-			if (unlockLevel >= 4) btnUnlockUpgrade.setDisable(true);
+			if (unlockLevel >= 4) {
+				
+				btnUnlockUpgrade.setDisable(true);
+				costUnlockUpgradesLabel.setText("");
+			}
 
 		}
 		
@@ -288,7 +292,9 @@ public class MainSceneController implements Initializable{
 					
 					score = score + clickerPoint;
 					
-					run();
+					timer();
+					
+					//run();
 					
 				});
 				
