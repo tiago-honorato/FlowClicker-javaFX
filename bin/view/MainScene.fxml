@@ -40,7 +40,7 @@
       </Button>
       <Label fx:id="costAddClickerLabel" layoutX="695.0" layoutY="230.0" text="Cost: 20" />
       <Label fx:id="reqLabelClickerUpgrade" layoutX="695.0" layoutY="274.0" textFill="RED" />
-      <Label fx:id="ClickersCountLabel" layoutX="370.0" layoutY="185.0">
+      <Label fx:id="clickersCountLabel" layoutX="370.0" layoutY="175.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -63,6 +63,13 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Label fx:id="costAddFactoryLabel" layoutX="695.0" layoutY="303.0" text="Cost: 20" />
+      <Label fx:id="costAddFactoryLabel" layoutX="695.0" layoutY="303.0" text="Cost: 50" />
+      <Label fx:id="reqLabelUnlockUpgrade" layoutX="6.0" layoutY="168.0" />
+      <Label fx:id="factoriesCountLabel" layoutX="370.0" layoutY="195.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="reqLabelFactoryAdd" layoutX="704.0" layoutY="350.0" />
    </children>
 </AnchorPane>

@@ -14,15 +14,18 @@ import javafx.stage.WindowEvent;
 
 public class MainSceneController implements Initializable{
 	
-	public boolean maxUpgradeFlow = false;
+	public boolean maxUpgradeFlow, factoryIsTrue = false;
 	
-	public int score = 1110;
+	public int score = 999999;
 	public int clickerPoint = 0;
+	public int factoryPointCounter = 0;
+	public int factories = 0;
 	public int scorePerClick = 1;
 	public int requiredToUnlockUpgrade = 10;
 	public int requiredToUpgradeFlow = 3;
 	public int requiredToUpgradeScore = 10;
 	public int requiredToUpgradeClicker = 20;
+	public int requiredToUpgradeFactory = 50;
 	
 	public double progressBarPoint = 0.1;
 	public double valueProgressBar = 0;
@@ -34,7 +37,9 @@ public class MainSceneController implements Initializable{
 	@FXML
 	public Label reqLabelUnlockUpgrade;
 	@FXML
-	public Label ClickersCountLabel;
+	public Label clickersCountLabel;
+	@FXML
+	public Label factoriesCountLabel;
 	@FXML
 	public Label costUnlockUpgradesLabel;
 	@FXML
@@ -51,6 +56,8 @@ public class MainSceneController implements Initializable{
 	public Label reqLabelScoreUpgrade;
 	@FXML
 	public Label reqLabelClickerUpgrade;
+	@FXML
+	public Label reqLabelFactoryAdd;
 	@FXML
 	public Label statsLabel;
 	
@@ -99,11 +106,12 @@ public class MainSceneController implements Initializable{
 		
 		dissapearLabel.setText("");
 		
-		String[] cores = {"BLUE", "RED", "GREEN", "PURPLE", "BLACK"};
+		String[] cores = {"BLUE", "RED", "GREEN", "PURPLE", "BLACK", "ORANGE"};
 		
 		btnFlow.setTextFill(Color.web(cores[a]));
 		scoreLabel.setTextFill(Color.web(cores[a]));
-		ClickersCountLabel.setTextFill(Color.web(cores[a]));
+		clickersCountLabel.setTextFill(Color.web(cores[a]));
+		factoriesCountLabel.setTextFill(Color.web(cores[a]));
 		a++;
 		if (a == 4) a = 0;
 		
@@ -120,7 +128,6 @@ public class MainSceneController implements Initializable{
 			
 		}
 		
-		
 		scoreLabel.setText(Integer.toString(score));
 		
 		if (score > 9) {
@@ -135,6 +142,7 @@ public class MainSceneController implements Initializable{
 	int unlockLevel = 0;
 	public void actBtnUnlockUpgrade() {
 		
+		//verifica se tem pontos suficientes
 		if (score >= requiredToUnlockUpgrade) {
 			
 			score = score - requiredToUnlockUpgrade;
@@ -167,6 +175,11 @@ public class MainSceneController implements Initializable{
 				costUnlockUpgradesLabel.setText("");
 			}
 
+		}else {
+			
+			reqLabelUnlockUpgrade.setTextFill(javafx.scene.paint.Color.RED);
+			reqLabelUnlockUpgrade.setText("need at least: " + Integer.toString(requiredToUnlockUpgrade));
+			
 		}
 		
 	}
@@ -216,7 +229,7 @@ public class MainSceneController implements Initializable{
 				
 			} else {
 				
-				reqLabelFlowUpgrade.setLayoutX(670);
+				reqLabelFlowUpgrade.setLayoutX(660);
 				reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.RED);
 				reqLabelFlowUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeFlow));
 				
@@ -267,7 +280,7 @@ public class MainSceneController implements Initializable{
 				
 			} else {
 				
-				reqLabelScoreUpgrade.setLayoutX(670);
+				reqLabelScoreUpgrade.setLayoutX(660);
 				reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.RED);
 				reqLabelScoreUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeScore));
 				
@@ -277,12 +290,13 @@ public class MainSceneController implements Initializable{
 		
 	}
 	
-	//myTimer.cancel();
 	public void timer() {
 		
 		Timer myTimer = new Timer();
 		
-		myTimer.schedule(new TimerTask() {
+		Timer atualizar = new Timer();
+		
+		myTimer.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override
 			public void run() {
@@ -295,11 +309,35 @@ public class MainSceneController implements Initializable{
 					
 					score = score + clickerPoint;
 					
+					if (factoryIsTrue) {
+						
+						factoryPointCounter++;
+						
+						if (factoryPointCounter >= 25) {
+							
+							score += 50*factories;
+							
+							factoryPointCounter = 0;
+							
+						}
+						
+					}
+					
 				});
 				
 			}
 			
 		}, 0, 1000);
+		
+		atualizar.scheduleAtFixedRate(new TimerTask() {
+			
+			@Override
+			public void run() {
+				
+				
+				
+			}
+		}, null, a);
 		
 	}
 	
@@ -342,11 +380,11 @@ public class MainSceneController implements Initializable{
 				
 				//atualiza os labels
 				costAddClickerLabel.setText("Cost: " + Integer.toString(requiredToUpgradeClicker));
-				ClickersCountLabel.setText("Clickers: " + Integer.toString(clickerPoint));
+				clickersCountLabel.setText("Clickers: " + Integer.toString(clickerPoint));
 				
 			} else {
 				
-				reqLabelClickerUpgrade.setLayoutX(670);
+				reqLabelClickerUpgrade.setLayoutX(660);
 				reqLabelClickerUpgrade.setTextFill(javafx.scene.paint.Color.RED);
 				reqLabelClickerUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeClicker));
 				
@@ -358,7 +396,46 @@ public class MainSceneController implements Initializable{
 	
 	public void actBtnAddFactory() {
 		
-		System.out.println("actBtnAddFactory()");
+		//verifica se o upgrade tá no máximo
+		if (factories >= 10) {
+			
+			reqLabelFactoryAdd.setText("");
+			costAddFactoryLabel.setText("MAX");
+			costAddFactoryLabel.setLayoutX(705);
+			
+			btnAddFactory.setDisable(true);
+			
+		}else {
+			
+			reqLabelFactoryAdd.setTextFill(javafx.scene.paint.Color.GREEN);
+			reqLabelFactoryAdd.setLayoutX(685);
+			reqLabelFactoryAdd.setText("upgraded!");
+			
+			//verifica se tem pontos suficientes
+			if (score >= requiredToUpgradeFactory) {
+				
+				//desconta os pontos a serem pagos
+				score = score - requiredToUpgradeFactory;
+				
+				factoryIsTrue = true;
+				
+				//upgrade
+				factories++;
+				
+				requiredToUpgradeFactory = (int)(requiredToUpgradeFactory*2.5);
+				
+				//atualiza os labels
+				factoriesCountLabel.setText("Factories: " + Integer.toString(factories));
+				costAddFactoryLabel.setText("Cost: " + Integer.toString(requiredToUpgradeFactory));
+			} else {
+				
+				reqLabelFactoryAdd.setLayoutX(660);
+				reqLabelFactoryAdd.setTextFill(javafx.scene.paint.Color.RED);
+				reqLabelFactoryAdd.setText("need at least: " + Integer.toString(requiredToUpgradeFactory));
+				
+			}
+			
+		}
 		
 	}
 	
