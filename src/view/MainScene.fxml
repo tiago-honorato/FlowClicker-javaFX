@@ -71,5 +71,12 @@
          </font>
       </Label>
       <Label fx:id="reqLabelFactoryAdd" layoutX="704.0" layoutY="350.0" />
+      <Button fx:id="btnFinish" disable="true" layoutX="363.0" layoutY="387.0" mnemonicParsing="false" onAction="#actBtnFinish" text="FINISH">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="factoryTimerLabel" layoutX="624.0" layoutY="327.0" />
+      <Label layoutX="364.0" layoutY="366.0" text="NEED: 50.000" />
    </children>
 </AnchorPane>

@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import application.Main;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,8 +16,7 @@ import javafx.stage.WindowEvent;
 
 public class MainSceneController implements Initializable{
 	
-	public boolean maxUpgradeFlow, factoryIsTrue = false;
-	
+	public boolean maxUpgradeFlow, factoryIsTrue, maxUpgradeFactory, maxUpgradeClicker, maxUpgradeScore = false;	
 	public int score = 999999;
 	public int clickerPoint = 0;
 	public int factoryPointCounter = 0;
@@ -60,6 +61,8 @@ public class MainSceneController implements Initializable{
 	public Label reqLabelFactoryAdd;
 	@FXML
 	public Label statsLabel;
+	@FXML
+	public Label factoryTimerLabel;
 	
 	@FXML
 	public ProgressBar progressBar;
@@ -76,6 +79,8 @@ public class MainSceneController implements Initializable{
 	public Button btnAddClicker;
 	@FXML
 	public Button btnAddFactory;
+	@FXML
+	public Button btnFinish;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -130,17 +135,12 @@ public class MainSceneController implements Initializable{
 		
 		scoreLabel.setText(Integer.toString(score));
 		
-		if (score > 9) {
-			
-			scoreLabel.setLayoutX(390);
-			
-			scoreLabel.setLayoutX(score > 9999 ? 365 : (score > 999 ? 375 : (score > 99 ? 385 : 390)));
-		}
-		
 	}
 	
 	int unlockLevel = 0;
 	public void actBtnUnlockUpgrade() {
+		
+		verifyMaxUpgrades();
 		
 		//verifica se tem pontos suficientes
 		if (score >= requiredToUnlockUpgrade) {
@@ -182,111 +182,91 @@ public class MainSceneController implements Initializable{
 			
 		}
 		
+		verifyMaxUpgrades();
+		
 	}
 	
 	public void actBtnUpgradeFlow () {
 		
-		//verifica se o upgrade tá no máximo
-		if (progressBarPoint >= 1) {
 			
-			maxUpgradeFlow = true;
+		verifyMaxUpgrades();
+		
+		reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
+		reqLabelFlowUpgrade.setLayoutX(685);
+		reqLabelFlowUpgrade.setText("upgraded!");
 			
-			reqLabelFlowUpgrade.setText("");
-			
-			costUpgradeFlowLabel.setText("MAX");
-			costUpgradeFlowLabel.setLayoutX(705);
-			btnUpgradeFlow.setDisable(true);
-			
-			progressBar.setProgress(-1);
-						
-		}else {
-			
-			reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
-			reqLabelFlowUpgrade.setLayoutX(685);
-			reqLabelFlowUpgrade.setText("upgraded!");
-			
-			//verifica se tem pontos suficientes
-			if (score >= requiredToUpgradeFlow) {
+		//verifica se tem pontos suficientes
+		if (score >= requiredToUpgradeFlow) {
 				
-				//desconta os pontos a serem pagos
-				score = score - requiredToUpgradeFlow;
+			//desconta os pontos a serem pagos
+			score = score - requiredToUpgradeFlow;
 				
-				if (requiredToUpgradeFlow >= 500) {		
+			if (requiredToUpgradeFlow >= 500) {		
 					
-					requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.1);
+				requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.1);
 					
-				}else {
+			}else {
 					
-					requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.4);
+				requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.4);
 					
-				}
-				
-				//upgrade
-				progressBarPoint = progressBarPoint + 0.02;
-				
-				//atualiza o label
-				costUpgradeFlowLabel.setText("Cost: " + Integer.toString(requiredToUpgradeFlow));
-				
-			} else {
-				
-				reqLabelFlowUpgrade.setLayoutX(660);
-				reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.RED);
-				reqLabelFlowUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeFlow));
-				
 			}
-			
+				
+			//upgrade
+			progressBarPoint = progressBarPoint + 0.02;
+				
+			//atualiza o label
+			costUpgradeFlowLabel.setText("Cost: " + Integer.toString(requiredToUpgradeFlow));
+				
+		} else {
+				
+			reqLabelFlowUpgrade.setLayoutX(660);
+			reqLabelFlowUpgrade.setTextFill(javafx.scene.paint.Color.RED);
+			reqLabelFlowUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeFlow));
+				
 		}
+		
+		verifyMaxUpgrades();
 		
 	}
 	
 	public void actBtnUpgradeScore() {
 		
-		//verifica se o upgrade tá no máximo
-		if (scorePerClick >= 10) {
-			
-			reqLabelScoreUpgrade.setText("");
-			
-			costUpgradeScoreLabel.setText("MAX");
-			costUpgradeScoreLabel.setLayoutX(705);
-			
-			btnUpgradeScore.setDisable(true);
-			
-		} else {
-			
-			reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
-			reqLabelScoreUpgrade.setLayoutX(685);
-			reqLabelScoreUpgrade.setText("upgraded!");
+		verifyMaxUpgrades();
+		
+		reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
+		reqLabelScoreUpgrade.setLayoutX(685);
+		reqLabelScoreUpgrade.setText("upgraded!");
 				
-			//verifica se tem pontos suficientes
-			if (score >= requiredToUpgradeScore) {
+		//verifica se tem pontos suficientes
+		if (score >= requiredToUpgradeScore) {
 				
-				//desconta os pontos a serem pagos
-				score = score - requiredToUpgradeScore;
+			//desconta os pontos a serem pagos
+			score = score - requiredToUpgradeScore;
 				
-				if (requiredToUpgradeScore >= 500) {
+			if (requiredToUpgradeScore >= 500) {
 					
-					requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.1);
+				requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.1);
 					
-				}else {
+			}else {
 					
-					requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.4);
+				requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.4);
 					
-				}
-				//upgrade
-				scorePerClick++;
-				
-				//atualiza o label
-				costUpgradeScoreLabel.setText("Cost: " + Integer.toString(requiredToUpgradeScore));
-				
-			} else {
-				
-				reqLabelScoreUpgrade.setLayoutX(660);
-				reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.RED);
-				reqLabelScoreUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeScore));
-				
 			}
-			
+			//upgrade
+			scorePerClick++;
+				
+			//atualiza o label
+			costUpgradeScoreLabel.setText("Cost: " + Integer.toString(requiredToUpgradeScore));
+				
+		} else {
+				
+			reqLabelScoreUpgrade.setLayoutX(660);
+			reqLabelScoreUpgrade.setTextFill(javafx.scene.paint.Color.RED);
+			reqLabelScoreUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeScore));
+				
 		}
+		
+		verifyMaxUpgrades();
 		
 	}
 	
@@ -303,15 +283,13 @@ public class MainSceneController implements Initializable{
 				
 				Platform .runLater(() -> {
 					
-					scoreLabel.setText(Integer.toString(score));
-					
-					statsLabel.setText("stats: ");
-					
 					score = score + clickerPoint;
 					
 					if (factoryIsTrue) {
 						
 						factoryPointCounter++;
+						
+						factoryTimerLabel.setText("" + factoryPointCounter);
 						
 						if (factoryPointCounter >= 25) {
 							
@@ -323,7 +301,13 @@ public class MainSceneController implements Initializable{
 						
 					}
 					
-				});
+					if (maxUpgradeClicker && maxUpgradeScore && maxUpgradeFlow && maxUpgradeFactory && score >= 50000) {
+						
+						btnFinish.setDisable(false);
+						
+					}
+					
+				});				
 				
 			}
 			
@@ -334,108 +318,142 @@ public class MainSceneController implements Initializable{
 			@Override
 			public void run() {
 				
-				
+				Platform.runLater(() -> {
+					
+					scoreLabel.setText(Integer.toString(score));
+					
+					statsLabel.setText("||STATS: flow points per iteration: " + scorePerClick +
+							"|| " + "flow points per second: " + clickerPoint + "|| " + "flow points per 25 seconds: " + (50*factories) +"||");
+					
+					if (score > 9) {
+						
+						scoreLabel.setLayoutX(390);
+						
+						scoreLabel.setLayoutX(score > 9999 ? 365 : (score > 999 ? 375 : (score > 99 ? 385 : 390)));
+					}
+				});
 				
 			}
-		}, null, a);
+		}, 0, 300);
 		
 	}
 	
 	public void actBtnAddClicker() {
 		
-		//verifica se o upgrade tá no máximo
-		if (clickerPoint >= 50) {
-			
-			reqLabelClickerUpgrade.setText("");
-			
-			costAddClickerLabel.setText("MAX");
-			costAddClickerLabel.setLayoutX(705);
-			
-			btnAddClicker.setDisable(true);
-			
-		} else {
-			
-			reqLabelClickerUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
-			reqLabelClickerUpgrade.setLayoutX(685);
-			reqLabelClickerUpgrade.setText("upgraded!");
+		verifyMaxUpgrades();
+		
+		reqLabelClickerUpgrade.setTextFill(javafx.scene.paint.Color.GREEN);
+		reqLabelClickerUpgrade.setLayoutX(685);
+		reqLabelClickerUpgrade.setText("upgraded!");
 				
-			//verifica se tem pontos suficientes
-			if (score >= requiredToUpgradeClicker) {
+		//verifica se tem pontos suficientes
+		if (score >= requiredToUpgradeClicker) {
 				
-				//desconta os pontos a serem pagos
-				score = score - requiredToUpgradeClicker;
+			score = score - requiredToUpgradeClicker;
 				
-				if (requiredToUpgradeClicker >= 50) {
+			if (requiredToUpgradeClicker >= 50) {
 					
-					requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.1);
+				requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.1);
 					
-				}else {
+			}else {
 					
-					requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.4);
+				requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.4);
 					
-				}
-				//upgrade
-				clickerPoint++;
-				
-				
-				//atualiza os labels
-				costAddClickerLabel.setText("Cost: " + Integer.toString(requiredToUpgradeClicker));
-				clickersCountLabel.setText("Clickers: " + Integer.toString(clickerPoint));
-				
-			} else {
-				
-				reqLabelClickerUpgrade.setLayoutX(660);
-				reqLabelClickerUpgrade.setTextFill(javafx.scene.paint.Color.RED);
-				reqLabelClickerUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeClicker));
-				
 			}
-			
+			//upgrade
+			clickerPoint++;
+				
+				
+			//atualiza os labels
+			costAddClickerLabel.setText("Cost: " + Integer.toString(requiredToUpgradeClicker));
+			clickersCountLabel.setText("Clickers: " + Integer.toString(clickerPoint));
+				
+		} else {
+				
+			reqLabelClickerUpgrade.setLayoutX(660);
+			reqLabelClickerUpgrade.setTextFill(javafx.scene.paint.Color.RED);
+			reqLabelClickerUpgrade.setText("need at least: " + Integer.toString(requiredToUpgradeClicker));
+				
 		}
+		
+		verifyMaxUpgrades();
 		
 	}
 	
 	public void actBtnAddFactory() {
-		
-		//verifica se o upgrade tá no máximo
-		if (factories >= 10) {
 			
+		verifyMaxUpgrades();
+		
+		reqLabelFactoryAdd.setTextFill(javafx.scene.paint.Color.GREEN);
+		reqLabelFactoryAdd.setLayoutX(685);
+		reqLabelFactoryAdd.setText("upgraded!");
+			
+		//verifica se tem pontos suficientes
+		if (score >= requiredToUpgradeFactory) {
+				
+			//desconta os pontos a serem pagos
+			score = score - requiredToUpgradeFactory;
+				
+			factoryIsTrue = true;
+				
+			//upgrade
+			factories++;
+				
+			requiredToUpgradeFactory = (int)(requiredToUpgradeFactory*2.5);
+				
+			//atualiza os labels
+			factoriesCountLabel.setText("Factories: " + Integer.toString(factories));
+			costAddFactoryLabel.setText("Cost: " + Integer.toString(requiredToUpgradeFactory));
+		} else {
+				
+			reqLabelFactoryAdd.setLayoutX(660);
+			reqLabelFactoryAdd.setTextFill(javafx.scene.paint.Color.RED);
+			reqLabelFactoryAdd.setText("need at least: " + Integer.toString(requiredToUpgradeFactory));
+				
+		}
+		
+		verifyMaxUpgrades();
+		
+	}
+	
+	public void verifyMaxUpgrades() {
+		
+		//desconta os pontos a serem pagos
+		if (factories >= 10) {
+			maxUpgradeFactory = true;
 			reqLabelFactoryAdd.setText("");
 			costAddFactoryLabel.setText("MAX");
 			costAddFactoryLabel.setLayoutX(705);
-			
 			btnAddFactory.setDisable(true);
-			
-		}else {
-			
-			reqLabelFactoryAdd.setTextFill(javafx.scene.paint.Color.GREEN);
-			reqLabelFactoryAdd.setLayoutX(685);
-			reqLabelFactoryAdd.setText("upgraded!");
-			
-			//verifica se tem pontos suficientes
-			if (score >= requiredToUpgradeFactory) {
-				
-				//desconta os pontos a serem pagos
-				score = score - requiredToUpgradeFactory;
-				
-				factoryIsTrue = true;
-				
-				//upgrade
-				factories++;
-				
-				requiredToUpgradeFactory = (int)(requiredToUpgradeFactory*2.5);
-				
-				//atualiza os labels
-				factoriesCountLabel.setText("Factories: " + Integer.toString(factories));
-				costAddFactoryLabel.setText("Cost: " + Integer.toString(requiredToUpgradeFactory));
-			} else {
-				
-				reqLabelFactoryAdd.setLayoutX(660);
-				reqLabelFactoryAdd.setTextFill(javafx.scene.paint.Color.RED);
-				reqLabelFactoryAdd.setText("need at least: " + Integer.toString(requiredToUpgradeFactory));
-				
-			}
-			
 		}
+		if (progressBarPoint >= 1) {
+			maxUpgradeFlow = true;
+			reqLabelFlowUpgrade.setText("");
+			costUpgradeFlowLabel.setText("MAX");
+			costUpgradeFlowLabel.setLayoutX(705);
+			btnUpgradeFlow.setDisable(true);
+			progressBar.setProgress(-1);	
+		}
+		if (scorePerClick >= 10) {
+			maxUpgradeScore = true;
+			reqLabelScoreUpgrade.setText("");
+			costUpgradeScoreLabel.setText("MAX");
+			costUpgradeScoreLabel.setLayoutX(705);
+			btnUpgradeScore.setDisable(true);
+		}
+		if (clickerPoint >= 50) {
+			maxUpgradeClicker = true;
+			reqLabelClickerUpgrade.setText("");
+			costAddClickerLabel.setText("MAX");
+			costAddClickerLabel.setLayoutX(705);
+			btnAddClicker.setDisable(true);
+		}
+		
+	}
+	
+	public void actBtnFinish() {
+
+		Main.changeScreen();
 		
 	}
 	
