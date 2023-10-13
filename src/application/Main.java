@@ -22,7 +22,7 @@ public class Main extends Application {
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/MainScene.fxml"));
 			Scene scene = new Scene(root);
 			
-			AnchorPane finalScene1 = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/Endgame.fxml"));
+			AnchorPane finalScene1 = (AnchorPane)FXMLLoader.load(getClass().getResource("/view/EndgameScene.fxml"));
 			finalScene = new Scene(finalScene1);
 			
 			scene.getStylesheets().add(getClass().getResource("/view/application.css").toExternalForm());

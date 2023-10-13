@@ -171,8 +171,10 @@ public class MainSceneController implements Initializable{
 			//verifica se já desbloqueou tudo
 			if (unlockLevel >= 4) {
 				
-				btnUnlockUpgrade.setDisable(true);
 				costUnlockUpgradesLabel.setText("");
+				btnUnlockUpgrade.setDisable(true);
+				reqLabelUnlockUpgrade.setText("");
+				
 			}
 
 		}else {
@@ -291,7 +293,7 @@ public class MainSceneController implements Initializable{
 						
 						factoryTimerLabel.setText("" + factoryPointCounter);
 						
-						if (factoryPointCounter >= 25) {
+						if (factoryPointCounter >= 20) {
 							
 							score += 50*factories;
 							
@@ -323,7 +325,7 @@ public class MainSceneController implements Initializable{
 					scoreLabel.setText(Integer.toString(score));
 					
 					statsLabel.setText("||STATS: flow points per iteration: " + scorePerClick +
-							"|| " + "flow points per second: " + clickerPoint + "|| " + "flow points per 25 seconds: " + (50*factories) +"||");
+							"|| " + "flow points per second: " + clickerPoint + "|| " + "flow points per 20 seconds: " + (50*factories) +"||");
 					
 					if (score > 9) {
 						
