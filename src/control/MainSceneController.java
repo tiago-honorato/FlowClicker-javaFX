@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import application.Main;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -328,14 +327,14 @@ public class MainSceneController implements Initializable{
 			@Override
 			public void run() {
 				
-				String[] cores = {"BLUE", "RED", "GREEN", "PURPLE", "BLACK", "ORANGE"};
+				String[] cores = {"BLUE", "RED", "GREEN", "PURPLE", "ORANGE"};
 
 				
 				Platform.runLater(() -> {
 					
 					dissapearLabel.setTextFill(Color.web(cores[b]));
 					b++;
-					if (b >= 5) {
+					if (b >= 4) {
 						b = 0;
 					}
 					scoreLabel.setText(Integer.toString(score));

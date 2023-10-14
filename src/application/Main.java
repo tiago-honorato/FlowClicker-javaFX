@@ -29,7 +29,7 @@ public class Main extends Application {
 			
 			primaryStage.setScene(scene);
 			
-			primaryStage.setTitle("< FLOW >");
+			primaryStage.setTitle("< FLOW CLICKER >");
 			
 			primaryStage.setResizable(false);
 			
