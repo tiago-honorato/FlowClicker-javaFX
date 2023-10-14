@@ -112,11 +112,19 @@ public class MainSceneController implements Initializable{
 		dissapearLabel.setText("");
 		
 		String[] cores = {"BLUE", "RED", "GREEN", "PURPLE", "BLACK", "ORANGE"};
+		String[] coresProgressBar = {"#0000FF", "#FF0000", "#008000", "#800080", "#000000", "#FFA500"};
 		
 		btnFlow.setTextFill(Color.web(cores[a]));
 		scoreLabel.setTextFill(Color.web(cores[a]));
 		clickersCountLabel.setTextFill(Color.web(cores[a]));
 		factoriesCountLabel.setTextFill(Color.web(cores[a]));
+		
+		if (!maxUpgradeFlow) {
+			
+			progressBar.setStyle("-fx-accent:" + coresProgressBar[a] + ";");
+			
+		}
+		
 		a++;
 		if (a == 4) a = 0;
 		
@@ -316,16 +324,24 @@ public class MainSceneController implements Initializable{
 		}, 0, 1000);
 		
 		atualizar.scheduleAtFixedRate(new TimerTask() {
-			
+			int b = 0;
 			@Override
 			public void run() {
 				
+				String[] cores = {"BLUE", "RED", "GREEN", "PURPLE", "BLACK", "ORANGE"};
+
+				
 				Platform.runLater(() -> {
 					
+					dissapearLabel.setTextFill(Color.web(cores[b]));
+					b++;
+					if (b >= 5) {
+						b = 0;
+					}
 					scoreLabel.setText(Integer.toString(score));
 					
-					statsLabel.setText("||STATS: flow points per iteration: " + scorePerClick +
-							"|| " + "flow points per second: " + clickerPoint + "|| " + "flow points per 20 seconds: " + (50*factories) +"||");
+					statsLabel.setText("STATS: flow points per iteration: " + scorePerClick +
+							"| " + "flow points per second: " + clickerPoint + "| " + "flow points per 20 seconds: " + (50*factories));
 					
 					if (score > 9) {
 						
