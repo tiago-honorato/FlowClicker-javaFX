@@ -14,7 +14,7 @@
          </font>
       </Button>
       <ProgressBar fx:id="progressBar" layoutX="199.0" layoutY="220.0" prefHeight="30.0" prefWidth="400.0" progress="0.0" style="-fx-background-color: #FFFFFF;" />
-      <Label fx:id="scoreLabel" layoutX="400.0" layoutY="320.0" text="0">
+      <Label fx:id="scoreLabel" layoutX="400.0" layoutY="310.0" text="0">
          <font>
             <Font size="25.0" />
          </font>
@@ -77,6 +77,7 @@
          </font>
       </Button>
       <Label fx:id="factoryTimerLabel" layoutX="624.0" layoutY="327.0" />
-      <Label layoutX="364.0" layoutY="366.0" text="NEED: 50.000" />
+      <Label fx:id="need25Label" layoutX="364.0" layoutY="366.0" text="NEED: 25.000" textFill="RED" />
+      <Label fx:id="needMaxAllUpgradesLabel" layoutX="322.0" layoutY="350.0" text="NEED MAX ALL UPGRADES" textFill="RED" />
    </children>
 </AnchorPane>

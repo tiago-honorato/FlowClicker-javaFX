@@ -16,7 +16,7 @@ import javafx.stage.WindowEvent;
 public class MainSceneController implements Initializable{
 	
 	public boolean maxUpgradeFlow, factoryIsTrue, maxUpgradeFactory, maxUpgradeClicker, maxUpgradeScore = false;	
-	public int score = 999999;
+	public int score = 0;
 	public int clickerPoint = 0;
 	public int factoryPointCounter = 0;
 	public int factories = 0;
@@ -62,6 +62,10 @@ public class MainSceneController implements Initializable{
 	public Label statsLabel;
 	@FXML
 	public Label factoryTimerLabel;
+	@FXML
+	public Label needMaxAllUpgradesLabel;
+	@FXML
+	public Label need25Label;
 	
 	@FXML
 	public ProgressBar progressBar;
@@ -83,6 +87,9 @@ public class MainSceneController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
+		needMaxAllUpgradesLabel.setTextFill(Color.web("RED"));
+		need25Label.setTextFill(Color.web("RED"));
 		
 		timer();
 		
@@ -209,9 +216,9 @@ public class MainSceneController implements Initializable{
 				
 			//desconta os pontos a serem pagos
 			score = score - requiredToUpgradeFlow;
+			
+			if (requiredToUpgradeFlow >= 50) {		
 				
-			if (requiredToUpgradeFlow >= 500) {		
-					
 				requiredToUpgradeFlow = (int) (requiredToUpgradeFlow*1.1);
 					
 			}else {
@@ -221,7 +228,7 @@ public class MainSceneController implements Initializable{
 			}
 				
 			//upgrade
-			progressBarPoint = progressBarPoint + 0.02;
+			progressBarPoint = progressBarPoint + 0.05;
 				
 			//atualiza o label
 			costUpgradeFlowLabel.setText("Cost: " + Integer.toString(requiredToUpgradeFlow));
@@ -251,9 +258,9 @@ public class MainSceneController implements Initializable{
 				
 			//desconta os pontos a serem pagos
 			score = score - requiredToUpgradeScore;
-				
+			
 			if (requiredToUpgradeScore >= 500) {
-					
+				
 				requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.1);
 					
 			}else {
@@ -261,6 +268,7 @@ public class MainSceneController implements Initializable{
 				requiredToUpgradeScore = (int) (requiredToUpgradeScore*1.4);
 					
 			}
+
 			//upgrade
 			scorePerClick++;
 				
@@ -300,7 +308,7 @@ public class MainSceneController implements Initializable{
 						
 						factoryTimerLabel.setText("" + factoryPointCounter);
 						
-						if (factoryPointCounter >= 20) {
+						if (factoryPointCounter >= 10) {
 							
 							score += 50*factories;
 							
@@ -310,7 +318,13 @@ public class MainSceneController implements Initializable{
 						
 					}
 					
-					if (maxUpgradeClicker && maxUpgradeScore && maxUpgradeFlow && maxUpgradeFactory && score >= 50000) {
+					if (maxUpgradeClicker && maxUpgradeScore && maxUpgradeFlow && maxUpgradeFactory) {
+						needMaxAllUpgradesLabel.setText("");
+					}
+					if (score >= 25000) {
+						need25Label.setText("");
+					}
+					if (maxUpgradeClicker && maxUpgradeScore && maxUpgradeFlow && maxUpgradeFactory && score >= 25000) {
 						
 						btnFinish.setDisable(false);
 						
@@ -340,14 +354,9 @@ public class MainSceneController implements Initializable{
 					scoreLabel.setText(Integer.toString(score));
 					
 					statsLabel.setText("STATS: flow points per iteration: " + scorePerClick +
-							"| " + "flow points per second: " + clickerPoint + "| " + "flow points per 20 seconds: " + (50*factories));
+							"| " + "flow points per second: " + clickerPoint + "| " + "flow points per 10 seconds: " + (50*factories));
 					
-					if (score > 9) {
-						
-						scoreLabel.setLayoutX(390);
-						
-						scoreLabel.setLayoutX(score > 9999 ? 365 : (score > 999 ? 375 : (score > 99 ? 385 : 390)));
-					}
+					scoreLabel.setLayoutX(score > 9999 ? 365 : (score > 999 ? 375 : (score > 99 ? 385 : (score > 9 ? 390: 400))));
 				});
 				
 			}
@@ -368,15 +377,8 @@ public class MainSceneController implements Initializable{
 				
 			score = score - requiredToUpgradeClicker;
 				
-			if (requiredToUpgradeClicker >= 50) {
-					
-				requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.1);
-					
-			}else {
-					
-				requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.4);
-					
-			}
+			requiredToUpgradeClicker = (int) (requiredToUpgradeClicker*1.1);
+
 			//upgrade
 			clickerPoint++;
 				
@@ -416,7 +418,7 @@ public class MainSceneController implements Initializable{
 			//upgrade
 			factories++;
 				
-			requiredToUpgradeFactory = (int)(requiredToUpgradeFactory*2.5);
+			requiredToUpgradeFactory = (int)(requiredToUpgradeFactory*1.7);
 				
 			//atualiza os labels
 			factoriesCountLabel.setText("Factories: " + Integer.toString(factories));

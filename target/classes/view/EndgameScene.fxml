@@ -11,5 +11,10 @@
             <Font size="30.0" />
          </font>
       </Label>
+      <Label layoutX="472.0" layoutY="372.0" text="Developed by Tiago H." underline="true">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
