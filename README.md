@@ -1,5 +1,5 @@
 
-<h1 align="center">Flow Clicker✂️</h1>
+<h1 align="center">Flow Clicker🎯</h1>
 
 **<p align="center">Se consiste em um simples clicker feito em java.</p>**
 
