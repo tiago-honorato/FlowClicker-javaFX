@@ -16,7 +16,7 @@
 
 -abra o arquivo jar com clique duplo
 
--enjoy ;)
+-enjoy it ;)
 
 <h3>Tecnologias utilizadas:</h3>
 
