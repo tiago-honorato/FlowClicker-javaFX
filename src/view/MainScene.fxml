@@ -78,6 +78,6 @@
       </Button>
       <Label fx:id="factoryTimerLabel" layoutX="624.0" layoutY="327.0" />
       <Label fx:id="need25Label" layoutX="364.0" layoutY="366.0" text="NEED: 25.000" textFill="RED" />
-      <Label fx:id="needMaxAllUpgradesLabel" layoutX="322.0" layoutY="350.0" text="NEED MAX ALL UPGRADES" textFill="RED" />
+      <Label fx:id="needMaxAllUpgradesLabel" layoutX="322.0" layoutY="350.0" text="NEED TO MAX ALL UPGRADES" textFill="RED" />
    </children>
 </AnchorPane>
