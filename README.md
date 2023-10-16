@@ -12,7 +12,7 @@
 
 **•Como jogar:**
 
--baixe o arquivo flow.jar deste repositório
+-baixe o arquivo flowclicker.jar deste repositório
 
 -abra o arquivo jar com clique duplo
 
